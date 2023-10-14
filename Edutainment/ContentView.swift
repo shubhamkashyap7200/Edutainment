@@ -14,7 +14,8 @@ struct ContentView: View {
     @State private var selectedTable = 2
     @State private var selectedNumberOfQuestions = 1
     @FocusState private var isNumberOfQuestionsFocused: Bool
-    
+    @State var showModal: Bool = false
+
     // Contants
     let maxTableLimit = 12
     
@@ -51,9 +52,14 @@ struct ContentView: View {
                     HStack {
                         Spacer()
                         Button("Start the game") {
+                            showModal = true
                             print("Pressed button")
                         }
                         .disabled(isStartButtonActive)
+                        .fullScreenCover(isPresented: $showModal) {
+                            // Passing the values to next view
+                            GameMainView(selectedTable: selectedTable, selectedNumberOfQuestions: selectedNumberOfQuestions)
+                        }
                         
                         .buttonStyle(.borderedProminent)
                         Spacer()
